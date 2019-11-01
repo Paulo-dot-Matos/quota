@@ -1,4 +1,6 @@
 
+
+
 var socios = [
     {
       "Num_Socio": 1,
@@ -56,7 +58,7 @@ var socios = [
     },
     {
       "Num_Socio": 7,
-      "Nome": "Joana Lan�a",
+      "Nome": "Joana Mendes",
       "Data_Nascimento": "09/09/1999",
       "Data_Socio": "04/04/2006",
       "Morada": "Morada x",
@@ -146,7 +148,7 @@ var socios = [
     },
     {
       "Num_Socio": 17,
-      "Nome": "Joana Lan�a",
+      "Nome": "Joana Mendes",
       "Data_Nascimento": "09/09/1999",
       "Data_Socio": "04/04/2006",
       "Morada": "Morada x",
@@ -188,4 +190,63 @@ var texto = JSON.stringify(socios[0]);
 
 
 
-document.getElementById('demo').innerHTML = texto;
+function addCell (tr,val) {
+  var td = document.createElement('td');
+  td.innerHTML = val;
+
+  tr.appendChild(td);
+}
+
+function addHeaders (tr, val){
+  var td = document.createElement('th');
+  td.innerHTML = val;
+
+  tr.appendChild(td);
+}
+
+function addRowHeaders (tbl, val_1, val_2, val_3, val_4, val_5, val_6, val_7) {
+  var tr = document.createElement('tr');
+
+  addHeaders(tr,val_1);
+  addHeaders(tr,val_2);
+  addHeaders(tr,val_3);
+  addHeaders(tr,val_4);
+  addHeaders(tr,val_5);
+  addHeaders(tr,val_6);
+  addHeaders(tr,val_7);
+
+  tbl.appendChild(tr);
+
+}
+
+
+function addRow (tbl, val_1, val_2, val_3, val_4, val_5, val_6, val_7) {
+  var tr = document.createElement('tr');
+
+  addCell(tr,val_1);
+  addCell(tr,val_2);
+  addCell(tr,val_3);
+  addCell(tr,val_4);
+  addCell(tr,val_5);
+  addCell(tr,val_6);
+  addCell(tr,val_7);
+
+  tbl.appendChild(tr);
+
+}
+
+function createTable() {
+  if (socios.length != 0){
+    tbl = document.getElementById('tbl');
+    addRowHeaders(tbl,'Num_Socio', 'Nome', 'Data_Nascimento', 'Data_Socio','Morada','email','telefone');
+    for (i=0; i < socios.length; i++) {
+      addRow(tbl,socios[i].Num_Socio,socios[i].Nome,socios[i].Data_Nascimento,socios[i].Data_Socio,socios[i].Morada,socios[i].email,socios[i].telefone);
+    }
+  } else {
+    document.getElementById("demo").innerHTML = "Nao existem socios para mostrar :' (";
+    
+  }
+  
+}
+
+window.onload = createTable();
