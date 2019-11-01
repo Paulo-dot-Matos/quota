@@ -31,7 +31,18 @@
             </div>
 
             <div id="demo" class="resultado">
-                <table id="tbl" border ="1"></table>
+                <span>Numero de linhas a mostrar</span> 
+
+                <select id="numeroLinhas" onchange="createTable()">
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                </select>
+                <br>
+                <br>
+                
+                <table id="tbl" border="1"></table>
+                <div id ="buttonHolder"></div>
             </div>
     </div>
 

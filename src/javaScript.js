@@ -216,7 +216,6 @@ function addRowHeaders (tbl, val_1, val_2, val_3, val_4, val_5, val_6, val_7) {
   addHeaders(tr,val_7);
 
   tbl.appendChild(tr);
-
 }
 
 
@@ -232,21 +231,95 @@ function addRow (tbl, val_1, val_2, val_3, val_4, val_5, val_6, val_7) {
   addCell(tr,val_7);
 
   tbl.appendChild(tr);
-
 }
 
+var elementoLinhasSelecionadas = document.getElementById("numeroLinhas");
+
+console.log(numeroLinhas);
+
+
 function createTable() {
+
+  clearTAbleBox();
+
+  var numeroLinhas = numeroLinhasSelecionas();
+  
+  criarButoes(socios.length,numeroLinhas);
+
   if (socios.length != 0){
+
     tbl = document.getElementById('tbl');
     addRowHeaders(tbl,'Num_Socio', 'Nome', 'Data_Nascimento', 'Data_Socio','Morada','email','telefone');
-    for (i=0; i < socios.length; i++) {
+
+    var loopLenght;
+    if (numeroLinhas < socios.length){
+      loopLenght = numeroLinhas;
+    } else {
+      loopLenght = socios.length;
+    }
+
+    for (i=0; i < loopLenght; i++) {
       addRow(tbl,socios[i].Num_Socio,socios[i].Nome,socios[i].Data_Nascimento,socios[i].Data_Socio,socios[i].Morada,socios[i].email,socios[i].telefone);
     }
   } else {
     document.getElementById("demo").innerHTML = "Nao existem socios para mostrar :' (";
-    
   }
-  
 }
+
+
+function createTableFromButton(valor){
+  document.getElementById("tbl").innerHTML = "";
+  var tamanhoArray = socios.length;
+   var numeroLinhas = numeroLinhasSelecionas();  
+  var numBotao = document.getElementById(valor).getAttribute("value");
+    console.log(numBotao);
+
+    tbl = document.getElementById('tbl');
+    addRowHeaders(tbl,'Num_Socio', 'Nome', 'Data_Nascimento', 'Data_Socio','Morada','email','telefone');
+
+    if (numBotao*numeroLinhas >= tamanhoArray)
+      for (i=numBotao*numeroLinhas-numeroLinhas; i<tamanhoArray;i++)
+         addRow(tbl,socios[i].Num_Socio,socios[i].Nome,socios[i].Data_Nascimento,socios[i].Data_Socio,socios[i].Morada,socios[i].email,socios[i].telefone);
+    else
+       for (i=numBotao*numeroLinhas-numeroLinhas; i<=numBotao*numeroLinhas;i++)
+           addRow(tbl,socios[i].Num_Socio,socios[i].Nome,socios[i].Data_Nascimento,socios[i].Data_Socio,socios[i].Morada,socios[i].email,socios[i].telefone);
+}
+
+function clearTAbleBox () {
+  document.getElementById("tbl").innerHTML = "";
+  document.getElementById("buttonHolder").innerHTML = "";
+
+}
+
+function numeroLinhasSelecionas() {
+  return numeroLinhas = elementoLinhasSelecionadas.options[elementoLinhasSelecionadas.selectedIndex].value;
+}
+
+
+
+function addButton (numeroButao) {
+  var butao = document.createElement('button');
+
+ butao.setAttribute("id","butao"+numeroButao); 
+ butao.setAttribute("type","button");
+ butao.setAttribute("value",numeroButao);
+ butao.addEventListener('click',function(){createTableFromButton("butao"+numeroButao)});
+ butao.innerText = numeroButao;
+
+  var paiButao = document.getElementById('buttonHolder');
+  paiButao.append(butao);
+}
+
+function criarButoes (totalLinhas, linhasSelecionadas) {
+  var valor = Math.ceil(totalLinhas/linhasSelecionadas);
+  var numeorBotao = 1;
+
+  while (valor > 0 ){    
+    addButton(numeorBotao);
+    valor --;
+    numeorBotao ++;
+  }
+}
+
 
 window.onload = createTable();
