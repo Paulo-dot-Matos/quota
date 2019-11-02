@@ -8,8 +8,11 @@
     left: 0;
     background-color: #111;
     padding-top: 20px;
+    
 }
-
+#sidenav li {
+    list-style-type: none;
+}
 #sidenav a {
     color: aliceblue; 
     display: block;
@@ -17,6 +20,7 @@
     text-decoration: none;
     font-size: 20px;
     font-family: 'arial';
+    
 }
 
 #sidenav a:hover{
