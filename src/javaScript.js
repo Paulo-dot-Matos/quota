@@ -364,11 +364,10 @@ var socios = [
     }
    ];
 
-
-
-var texto = JSON.stringify(socios[0]);
-
-
+/*
+Funcions to create a dinamic table from java script
+Currently loading data from inner array must change to outer surce
+*/
 
 function addCell (tr,val) {
   var td = document.createElement('td');
@@ -413,11 +412,19 @@ function addRow (tbl, val_1, val_2, val_3, val_4, val_5, val_6, val_7) {
   tbl.appendChild(tr);
 }
 
-var elementoLinhasSelecionadas = document.getElementById("numeroLinhas");
+//************************************************************************** */
+
+
+
 
 console.log(numeroLinhas);
 
 
+
+/*
+Função chamada no load da pagina que cria a tablea com base no numero de linhas que se quer ver
+Tambem criar o numero de botoes necessarios para mostrar o conteudo todo.
+*/
 function createTable() {
 
   clearTAbleBox();
@@ -446,6 +453,24 @@ function createTable() {
   }
 }
 
+/*
+Função que pega no conteudo todo do array e cria uma tabela com ele usada para quando se procura alguma coisa não estar limitado ao que se mostra
+no botao selecionado mas procurar na tabela toda
+*/
+function createFullTable() {
+  clearTAbleBox();
+  tbl = document.getElementById('tbl');
+  addRowHeaders(tbl,'Num_Socio', 'Nome', 'Data_Nascimento', 'Data_Socio','Morada','email','telefone');
+
+  for (i=0; i < socios.length; i++) 
+    addRow(tbl,socios[i].Num_Socio,socios[i].Nome,socios[i].Data_Nascimento,socios[i].Data_Socio,socios[i].Morada,socios[i].email,socios[i].telefone);
+
+}
+
+/*
+Função que cria a tabela quando se clica no botao. Pois o numero do botao e a quantidade de linhas que se quer influencia one se esta no array
+e onde se esta é dependente do numero de linhas que se quer mostrar e do numero de botao.
+*/
 
 function createTableFromButton(valor){
   document.getElementById("tbl").innerHTML = "";
@@ -465,18 +490,25 @@ function createTableFromButton(valor){
            addRow(tbl,socios[i].Num_Socio,socios[i].Nome,socios[i].Data_Nascimento,socios[i].Data_Socio,socios[i].Morada,socios[i].email,socios[i].telefone);
 }
 
+
+//Limpa por completo a zona da tabela incluido os botoes que esta cada um no seu <div>
 function clearTAbleBox () {
   document.getElementById("tbl").innerHTML = "";
   document.getElementById("buttonHolder").innerHTML = "";
 
 }
 
+
+//Vai buscar o numero de linhas selcionas na tag <select> e retorna o valor
 function numeroLinhasSelecionas() {
+  var elementoLinhasSelecionadas = document.getElementById("numeroLinhas");
   return numeroLinhas = elementoLinhasSelecionadas.options[elementoLinhasSelecionadas.selectedIndex].value;
 }
 
 
-
+/*
+Função que cria cada butao com os atributos necessarios
+*/
 function addButton (numeroButao) {
   var butao = document.createElement('button');
 
@@ -490,6 +522,12 @@ function addButton (numeroButao) {
   paiButao.append(butao);
 }
 
+
+
+/*
+Pega na função anterior e cria o numero de butoes necessarios que tendo em conta o numero de linhas a mostrar
+selecionado e o tamnho do array criar dinamicamente os butoes necessarios para que seja possivel a visualizxação de todo o conteudo
+*/
 function criarButoes (totalLinhas, linhasSelecionadas) {
   var valor = Math.ceil(totalLinhas/linhasSelecionadas);
   var numeorBotao = 1;
@@ -501,9 +539,12 @@ function criarButoes (totalLinhas, linhasSelecionadas) {
   }
 }
 
-window.onload = createTable();
 
+//Função de pesquisa pelo array
 function seacrh(){
+
+  createFullTable();
+
   var input = document.getElementById('valorPesquisa');
   var filter = input.value.toUpperCase();
   var table = document.getElementById('tbl');
@@ -524,3 +565,6 @@ function seacrh(){
   }
 
 }
+
+//Cria a tabela quando o broswer faz o load da pagina
+window.onload = createTable();
